@@ -37,9 +37,13 @@ app.*.map.json
 /android/app/debug
 /android/app/profile
 /android/app/release
+/android/build/
 
 # FVM
 .fvm/flutter_sdk
+.fvm/versions/
+.fvm/release
+.fvm/version
 
 # Environment
 .env
@@ -58,3 +62,6 @@ ARCHITECTURE.md
 *.g.dart
 *.freezed.dart
 *.config.dart
+
+# Flutter DevTools (local)
+devtools_options.yaml
