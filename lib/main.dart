@@ -1,11 +1,10 @@
 import 'package:flutter/material.dart';
 
-void main() {
-  runApp(
-    const MaterialApp(
-      home: Scaffold(
-        body: Center(child: Text('Currency Converter')),
-      ),
-    ),
-  );
+import 'package:currencyconverter/app/app.dart';
+import 'package:currencyconverter/core/di/di.dart';
+
+Future<void> main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  configureInjection();
+  runApp(const CurrencyConverterApp());
 }
