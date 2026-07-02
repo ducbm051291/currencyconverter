@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 
 import 'package:currencyconverter/presentation/converter/model/converter_ui_model.dart';
+import 'package:currencyconverter/presentation/converter/widget/currency_picker_sheet.dart';
 
 class SavedCurrencyHeader extends StatelessWidget {
   const SavedCurrencyHeader({
@@ -46,40 +47,16 @@ class SavedCurrencyHeader extends StatelessWidget {
   }
 
   Future<void> _showCurrencyPicker(BuildContext context) async {
-    final codes = uiModel.rates.keys.toList()..sort();
-    final selected = await showModalBottomSheet<String>(
-      context: context,
-      isScrollControlled: true,
-      builder: (context) => _CurrencyPickerSheet(codes: codes),
+    final codes = uiModel.rates.keys.toList();
+    final selected = await showCurrencyPickerSheet(
+      context,
+      codes: codes,
+      selectedCode: uiModel.savedCurrencyCode,
+      suggestedCodes: suggestedCodesFor(codes),
     );
 
     if (selected != null) {
       onChangeSavedCurrency(selected);
     }
   }
-}
-
-class _CurrencyPickerSheet extends StatelessWidget {
-  const _CurrencyPickerSheet({required this.codes});
-
-  final List<String> codes;
-
-  @override
-  Widget build(BuildContext context) => DraggableScrollableSheet(
-        expand: false,
-        initialChildSize: 0.6,
-        minChildSize: 0.3,
-        maxChildSize: 0.9,
-        builder: (context, scrollController) => ListView.builder(
-          controller: scrollController,
-          itemCount: codes.length,
-          itemBuilder: (context, index) {
-            final code = codes[index];
-            return ListTile(
-              title: Text(code),
-              onTap: () => Navigator.of(context).pop(code),
-            );
-          },
-        ),
-      );
 }

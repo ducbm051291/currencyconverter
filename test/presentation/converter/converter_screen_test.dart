@@ -73,5 +73,26 @@ void main() {
       expect(find.text('Calculator'), findsOneWidget);
       expect(find.textContaining('EUR'), findsWidgets);
     });
+
+    testWidgets('calculator from field opens searchable picker', (tester) async {
+      await tester.pumpWidget(
+        MaterialApp(
+          home: Scaffold(
+            body: CalculatorSection(
+              uiModel: uiModel,
+              onAmountChanged: (_) {},
+              onFromChanged: (_) {},
+              onToChanged: (_) {},
+            ),
+          ),
+        ),
+      );
+
+      await tester.tap(find.text('USD').first);
+      await tester.pumpAndSettle();
+
+      expect(find.text('Select currency'), findsOneWidget);
+      expect(find.text('Search currency code'), findsOneWidget);
+    });
   });
 }

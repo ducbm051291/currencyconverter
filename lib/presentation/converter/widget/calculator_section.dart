@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
 import 'package:currencyconverter/presentation/converter/model/converter_ui_model.dart';
+import 'package:currencyconverter/presentation/converter/widget/currency_picker_sheet.dart';
 
 class CalculatorSection extends StatefulWidget {
   const CalculatorSection({
@@ -51,7 +52,7 @@ class _CalculatorSectionState extends State<CalculatorSection> {
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
-    final codes = widget.uiModel.rates.keys.toList()..sort();
+    final codes = widget.uiModel.rates.keys.toList();
 
     return Card(
       margin: const EdgeInsets.symmetric(horizontal: 16),
@@ -78,7 +79,7 @@ class _CalculatorSectionState extends State<CalculatorSection> {
             Row(
               children: [
                 Expanded(
-                  child: _CurrencyDropdown(
+                  child: _CurrencySelectorField(
                     label: 'From',
                     value: widget.uiModel.calculatorFromCode,
                     codes: codes,
@@ -87,7 +88,7 @@ class _CalculatorSectionState extends State<CalculatorSection> {
                 ),
                 const SizedBox(width: 12),
                 Expanded(
-                  child: _CurrencyDropdown(
+                  child: _CurrencySelectorField(
                     label: 'To',
                     value: widget.uiModel.calculatorToCode,
                     codes: codes,
@@ -112,8 +113,8 @@ class _CalculatorSectionState extends State<CalculatorSection> {
   }
 }
 
-class _CurrencyDropdown extends StatelessWidget {
-  const _CurrencyDropdown({
+class _CurrencySelectorField extends StatelessWidget {
+  const _CurrencySelectorField({
     required this.label,
     required this.value,
     required this.codes,
@@ -125,40 +126,35 @@ class _CurrencyDropdown extends StatelessWidget {
   final List<String> codes;
   final ValueChanged<String> onChanged;
 
+  Future<void> _openPicker(BuildContext context) async {
+    final selected = await showCurrencyPickerSheet(
+      context,
+      codes: codes,
+      selectedCode: value,
+      suggestedCodes: suggestedCodesFor(codes),
+    );
+
+    if (selected != null) {
+      onChanged(selected);
+    }
+  }
+
   @override
-  Widget build(BuildContext context) => DropdownButtonFormField<String>(
-        isExpanded: true,
-        decoration: InputDecoration(
-          labelText: label,
-          border: const OutlineInputBorder(),
-          isDense: true,
+  Widget build(BuildContext context) => InkWell(
+        onTap: () => _openPicker(context),
+        borderRadius: BorderRadius.circular(4),
+        child: InputDecorator(
+          decoration: InputDecoration(
+            labelText: label,
+            border: const OutlineInputBorder(),
+            isDense: true,
+            suffixIcon: const Icon(Icons.arrow_drop_down),
+          ),
+          child: Text(
+            value,
+            overflow: TextOverflow.ellipsis,
+            maxLines: 1,
+          ),
         ),
-        initialValue: codes.contains(value) ? value : codes.first,
-        selectedItemBuilder: (context) => codes
-            .map(
-              (code) => Text(
-                code,
-                overflow: TextOverflow.ellipsis,
-                maxLines: 1,
-              ),
-            )
-            .toList(),
-        items: codes
-            .map(
-              (code) => DropdownMenuItem(
-                value: code,
-                child: Text(
-                  code,
-                  overflow: TextOverflow.ellipsis,
-                  maxLines: 1,
-                ),
-              ),
-            )
-            .toList(),
-        onChanged: (selected) {
-          if (selected != null) {
-            onChanged(selected);
-          }
-        },
       );
 }
