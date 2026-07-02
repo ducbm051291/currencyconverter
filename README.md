@@ -6,7 +6,9 @@ Offline-first Flutter currency converter using Clean Architecture and Material 3
 
 ## Screenshots
 
-<img width="500" src="https://github.com/user-attachments/assets/969b5a4f-e1fc-472a-84f1-625b6f85417a" />
+| Light mode | Dark mode |
+|------------|-----------|
+| <img width="300" src="https://github.com/user-attachments/assets/969b5a4f-e1fc-472a-84f1-625b6f85417a" /> | <img width="300" src="https://github.com/user-attachments/assets/56a6afa7-4f37-45ea-a41c-f79516caa6c2" /> |
 
 ## Prerequisites
 
