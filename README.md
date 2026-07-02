@@ -6,24 +6,7 @@ Offline-first Flutter currency converter using Clean Architecture and Material 3
 
 ## Screenshots
 
-Add your simulator captures under [`screenshots/`](./screenshots/) (create the folder if needed), then reference them here.
-
-| Light mode | Dark mode |
-|------------|-----------|
-| ![Main screen (light)](./screenshots/light_main.png) | ![Main screen (dark)](./screenshots/dark_main.png) |
-
-| Saved currency & calculator | Offline / cached data |
-|-----------------------------|------------------------|
-| ![Calculator](./screenshots/calculator.png) | ![Cached rates](./screenshots/offline_cached.png) |
-
-**Suggested captures for the assessment:**
-
-1. **Online** — fresh rates with last-updated banner
-2. **Offline** — airplane mode or no network, showing **Using cached data**
-3. **Calculator** — amount conversion between two currencies
-4. **Dark mode** — system dark theme (optional but nice to show Material 3)
-
-To add images: save PNGs into `screenshots/` using the filenames above (or update the paths in this table).
+<img width="500" src="https://github.com/user-attachments/assets/969b5a4f-e1fc-472a-84f1-625b6f85417a" />
 
 ## Prerequisites
 
